@@ -57,7 +57,7 @@ class Vehicle extends Component {
 
       form.append("features", JSON.stringify(features));
 
-       axios.post("http://localhost:7850/staffs/addNewVehicle", form, {headers: {
+       axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {headers: {
                'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsInJvbGUiOjIsImlhdCI6MTYyNTUxMTEzNSwiZXhwIjoxNjI1NTE4MzM1LCJhdWQiOiJsb2NhbGhvc3QiLCJpc3MiOiJVUmVudGFsIiwic3ViIjoiZ2FicmllbGUucGFsbWVyaUB0ZXN0Lml0In0.IVYLlsTEtEfZr8Hol7gldYa8P1VxhFDcCYe7-OXFYNbxiSrfYNnu7ApoHinbPjEjLVFB79ax-bMMR3Ds8CXj7IC_-5tY9PiV-fA1LY5rYxTRGRKsmpbTd8jccqreD5QjXlPX8_993sEesnQ_Abno8y475RKcZ1DiR8wB3UDrLN8`
            }})
            .then(res => {
