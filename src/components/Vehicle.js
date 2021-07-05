@@ -62,8 +62,10 @@ class Vehicle extends Component {
            }})
            .then(res => {
                this.setState({
-                   completed: true
+                   completed: true,
+
                });
+               console.log("ciao");
            })
            .catch(err => {
                this.setState({
