@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./Profile.css";
-//import fs from "fs"
+import fs from "fs"
 import FormData from "form-data"
 //import { validateGasCar } from "./mymodule.js";
 
@@ -20,67 +20,57 @@ class Vehicle extends Component {
    }
 
    handleSubmit() {
-      if(this.state.type == "0") {
-         let form = new FormData();
-         form.append('brand', this.state)
-        
-         form.append('model', this.state.model);
-         form.append('serialNumber',this.state.serialNumber.toUpperCase());
-         form.append('mainImage',this.state.mainImage);
-         form.append('photos',this.state.photos);
-         form.append('type',this.state.type);
-         form.append('licensePlate',this.state.licensePlate);
-         form.append('displacement',this.state.displacement);
-         form.append('kilowatt',this.state.kilowatt);
-         form.append('seats',this.state.seats);
-         form.append('category',this.state.category);
-         form.append('consumption',this.state.consumption);
-         form.append('trunkSize',this.state.trunkSize);
-         form.append('shift',this.state.shift);
-         form.append('euro',this.state.euro);
-         form.append('fuel',this.state.fuel);
-         
-        /*let data = {
-         brand: this.state.brand,
-         model: this.state.model,
-         serialNumber: this.state.serialNumber.toUpperCase(),
-         mainImage: this.state.mainImage,
-         photos: this.state.photos,
-         email: this.state.email,
-         password: this.state.password,
-         type: this.state.type,
-         licensePlate: this.state.licensePlate,
-         displacement: this.state.displacement,
-         kilowatt: this.state.kilowatt,
-         seats: this.state.seats,
-         category: this.state.category,
-         consumption: this.state.consumption,
-         trunkSize: this.state.trunkSize,
-         shift: this.state.shift,
-         euro: this.state.euro,
-         fuel: this.state.fuel,
+       let form = new FormData();
 
+       form.append('brand', this.state.brand)
+       form.append('model', this.state.model);
+       form.append('serialNumber',this.state.serialNumber.toUpperCase());
+       form.append('type', this.state.type);
 
-        }*/
-        axios.interceptors.request.use(req => {
-           console.log(req)
-           return req
-        })
-        axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {headers: {
-         'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MiwiaWF0IjoxNjI1NDg1NTUyLCJleHAiOjE2MjU1NzE5NTIsImF1ZCI6ImxvY2FsaG9zdCIsImlzcyI6IlVSZW50YWwiLCJzdWIiOiJnYWJyaWVsZS5wYWxtZXJpQHRlc3QuaXQifQ.pIqU2bPZb7noTmaqrtMXhlNeNL1tFlb2znBHYc-6gK7pCWB8OQTy0XggHSJ-_THXf2z9Xx0zN1EGWTPUjJILJzNkaS0aj1aTUCL_EpOKXQMqIG8-TNhieL_3jVu1Z0kJF29lxS_1cS0MepF7V9y1_zaF3dLfcamjwcuFTomkF6A`
-         }})
-          .then(res => {
-            this.setState({
-              completed: true
-            });
-          })
-          .catch(err => {
-            this.setState({
-              errorMessage: err.response.data.message, 
-              isVisible: true
-            });
-          });
-      }
+       for(let i = 0; i < this.state.mainImage.length; i++){
+           console.log(this.state.mainImage[i]);
+           form.append('mainImage', this.state.mainImage[i]);
+       }
+       for(let i = 0; i < this.state.photos.length; i++){
+           console.log(this.state.photos[i]);
+           form.append('photos', this.state.photos[i]);
+       }
+
+       let features = {}
+
+       switch (this.state.type){
+           case "0":
+               features["licensePlate"] = this.state.licensePlate;
+               features["displacement"] = this.state.displacement;
+               features["kilowatt"] = this.state.kilowatt;
+               features["seats"] = this.state.seats;
+               features["category"] = this.state.category;
+               features["consumption"] = this.state.consumption;
+               features["trunkSize"] = this.state.trunkSize;
+               features["shift"] = this.state.shift;
+               features["euro"] = this.state.euro;
+               features["fuel"] = this.state.fuel;
+               break;
+           default:
+               break;
+       }
+
+      form.append("features", JSON.stringify(features));
+
+       axios.post("http://localhost:7850/staffs/addNewVehicle", form, {headers: {
+               'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsInJvbGUiOjIsImlhdCI6MTYyNTUxMTEzNSwiZXhwIjoxNjI1NTE4MzM1LCJhdWQiOiJsb2NhbGhvc3QiLCJpc3MiOiJVUmVudGFsIiwic3ViIjoiZ2FicmllbGUucGFsbWVyaUB0ZXN0Lml0In0.IVYLlsTEtEfZr8Hol7gldYa8P1VxhFDcCYe7-OXFYNbxiSrfYNnu7ApoHinbPjEjLVFB79ax-bMMR3Ds8CXj7IC_-5tY9PiV-fA1LY5rYxTRGRKsmpbTd8jccqreD5QjXlPX8_993sEesnQ_Abno8y475RKcZ1DiR8wB3UDrLN8`
+           }})
+           .then(res => {
+               this.setState({
+                   completed: true
+               });
+           })
+           .catch(err => {
+               this.setState({
+                   errorMessage: err.response.data.message,
+                   isVisible: true
+               });
+           });
     }
 
 
