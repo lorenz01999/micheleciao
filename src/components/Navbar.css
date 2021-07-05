@@ -1,0 +1,34 @@
+.navbar {
+   padding: 15px 50px !important;
+}
+
+.navbar-brand {
+   font-weight: 500;
+}
+
+.navbar-toggler {
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.nav-item {
+   margin-right: 25px;
+}
+
+.nav-link {
+	color: white !important;
+}
+
+@media (max-width: 992px) { 
+	.navbar {
+		padding: 20px !important;
+	}
+	
+	.navbar-collapse {
+		margin-top: 25px;
+	}
+	
+	.navbar .btn {
+		margin-top: 20px !important;
+	}
+}

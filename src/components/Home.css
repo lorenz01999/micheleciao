@@ -1,0 +1,91 @@
+#hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 0;
+  background: linear-gradient(#f7f7f7, #dbd1c5);
+}
+
+#hero img {
+  display: block;
+  width: 75%;
+  margin: auto;
+}
+
+#hero .text {
+  padding: 50px;
+}
+
+#hero .text p {
+  margin: 15px 0 25px 0;
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+}
+
+#cars,
+#motorbikes,
+#bike-and-scooter {
+  padding: 50px;
+}
+
+#cars h2,
+#motorbikes h2,
+#bike-and-scooter h2 {
+  margin-bottom: 25px;
+}
+
+#motorbikes {
+  background-color: #f7f7f7;
+}
+
+.circle-btn {
+  display: inline-block;
+  padding: 50px 30px;
+  background-color: #212529;
+  border-radius: 50%;
+  text-decoration: none;
+  color: white !important;
+  font-weight: 500;
+}
+
+.circle-btn-container {
+  width: 80%;
+  justify-content: center;
+  text-align: center; 
+}
+
+@media screen and (max-width: 575px) {
+	#hero {
+    grid-template-columns: 1fr;
+    padding: 50px 0;
+	}
+	
+	#hero .text {
+    margin-top: 25px;
+	  padding: 25px;
+	}
+	
+	.preview {
+		grid-template-columns: 1fr;
+	}
+
+  .preview .card {
+    margin-bottom: 25px;
+  }
+	
+	#cars,
+	#motorbikes,
+  #bike-and-scooter {
+	  padding: 30px;
+	}
+}
+
+@media screen and (min-width: 575px) and (max-width: 992px) {
+  .preview {
+    grid-template-columns: 1fr 1fr;
+  }
+}

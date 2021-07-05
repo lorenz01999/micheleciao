@@ -1,0 +1,45 @@
+.container-fluid { 
+   padding: 75px !important;
+   background-color: #f7f7f7;
+}
+
+.grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   margin-top: 50px;
+}
+
+.card {
+   margin-bottom: 50px;
+}
+
+@media screen and (max-width: 575px) {
+   .container-fluid {
+      padding: 50px 25px !important;
+      background-color: #f7f7f7 !important;
+   }
+
+   .grid {
+      grid-template-columns: 1fr;
+      margin-top: 30px;
+   }
+
+   .card {
+      margin-bottom: 25px;
+   }
+}
+
+@media screen and (min-width: 575px) and (max-width: 992px) {
+   .container-fluid {
+      padding: 50px !important;
+   }
+
+   .grid {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 30px;
+   }
+
+   .card {
+      margin-bottom: 25px;
+   }
+}

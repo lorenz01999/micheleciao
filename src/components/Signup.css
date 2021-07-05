@@ -1,0 +1,65 @@
+#stepper {
+   width: 60%;
+   margin: auto;
+   padding: 50px;
+   background-color: white;
+   border-radius: .25rem;
+}
+
+#stepper .bs-stepper-header {
+   margin-bottom: 30px;
+}
+
+#stepper .active .bs-stepper-circle {
+   background-color: #ffca2c;
+}
+
+#stepper input:checked {
+   background-color: #ffca2c !important;
+   border-color: #ffca2c !important;
+}
+
+#completed h3 {
+   width: 75%;
+   margin: 50px auto;
+   padding: 75px;
+   background-color: white;
+   border-radius: .25rem;
+   line-height: 45px;
+   text-align: center;
+}
+
+#completed h3 span {
+   color: #ffc107;
+}
+
+@media screen and (max-width: 575px) {
+   #stepper {
+      width: 100%;
+      padding: 25px;
+   }
+
+   #stepper .bs-stepper-label {
+      display: none;
+   }
+
+   #completed h3 {
+      width: 100%;
+      margin: 0;
+      padding: 30px;
+   }
+}
+
+@media screen and (min-width: 575px) and (max-width: 992px) {
+   #stepper {
+      width: 100%;
+   }
+
+   #stepper .bs-stepper-label {
+      display: none;
+   }
+
+   #completed h3 {
+      width: 100%;
+   }
+}
