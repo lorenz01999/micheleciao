@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Profile.css";
 import fs from "fs"
 import FormData from "form-data"
+import {validate3} from "./mymodule";
 //import { validateGasCar } from "./mymodule.js";
 
 class Vehicle extends Component {
@@ -21,57 +22,100 @@ class Vehicle extends Component {
 
    handleSubmit() {
        let form = new FormData();
+       let res = validate3(this.state);
+       if(res === true) {
+           form.append('brand', this.state.brand)
+           form.append('model', this.state.model);
+           form.append('serialNumber', this.state.serialNumber.toUpperCase());
+           form.append('type', this.state.type);
 
-       form.append('brand', this.state.brand)
-       form.append('model', this.state.model);
-       form.append('serialNumber',this.state.serialNumber.toUpperCase());
-       form.append('type', this.state.type);
+           for (let i = 0; i < this.state.mainImage.length; i++) {
+               form.append('mainImage', this.state.mainImage[i]);
+           }
+           for (let i = 0; i < this.state.photos.length; i++) {
+               form.append('photos', this.state.photos[i]);
+           }
 
-       for(let i = 0; i < this.state.mainImage.length; i++){
-           console.log(this.state.mainImage[i]);
-           form.append('mainImage', this.state.mainImage[i]);
-       }
-       for(let i = 0; i < this.state.photos.length; i++){
-           console.log(this.state.photos[i]);
-           form.append('photos', this.state.photos[i]);
-       }
+           let features = {}
 
-       let features = {}
+           switch (this.state.type) {
+               case "0":
+                   features["licensePlate"] = this.state.licensePlate;
+                   features["displacement"] = this.state.displacement;
+                   features["kilowatt"] = this.state.kilowatt;
+                   features["seats"] = this.state.seats;
+                   features["category"] = this.state.category;
+                   features["consumption"] = this.state.consumption;
+                   features["trunkSize"] = this.state.trunkSize;
+                   features["shift"] = this.state.shift;
+                   features["euro"] = this.state.euro;
+                   features["fuel"] = this.state.fuel;
+                   break;
+               case "1":
+                   features["licensePlate"] = this.state.licensePlate;
+                   features["kilowatt"] = this.state.kilowatt;
+                   features["seats"] = this.state.seats;
+                   features["category"] = this.state.category;
+                   features["consumption"] = this.state.consumption;
+                   features["trunkSize"] = this.state.trunkSize;
+                   features["batteryCapacity"] = this.state.batteryCapacity;
+                   features["chargeDuration"] = this.state.chargeDuration;
+                   break;
+               case "2":
+                   features["licensePlate"] = this.state.licensePlate;
+                   features["displacement"] = this.state.displacement;
+                   features["kilowatt"] = this.state.kilowatt;
+                   features["category"] = this.state.category;
+                   features["consumption"] = this.state.consumption;
+                   features["shift"] = this.state.shift;
+                   features["euro"] = this.state.euro;
+                   features["fuel"] = this.state.fuel;
+                   break;
+               case "3":
+                   features["licensePlate"] = this.state.licensePlate;
+                   features["kilowatt"] = this.state.kilowatt;
+                   features["category"] = this.state.category;
+                   features["consumption"] = this.state.consumption;
+                   features["batteryCapacity"] = this.state.batteryCapacity;
+                   features["chargeDuration"] = this.state.chargeDuration;
+                   break;
+               case "4":
+               case "5":
+                   features["batteryCapacity"] = this.state.batteryCapacity;
+                   features["chargeDuration"] = this.state.chargeDuration;
+                   break;
 
-       switch (this.state.type){
-           case "0":
-               features["licensePlate"] = this.state.licensePlate;
-               features["displacement"] = this.state.displacement;
-               features["kilowatt"] = this.state.kilowatt;
-               features["seats"] = this.state.seats;
-               features["category"] = this.state.category;
-               features["consumption"] = this.state.consumption;
-               features["trunkSize"] = this.state.trunkSize;
-               features["shift"] = this.state.shift;
-               features["euro"] = this.state.euro;
-               features["fuel"] = this.state.fuel;
-               break;
-           default:
-               break;
-       }
+               default:
+                   break;
+           }
 
-      form.append("features", JSON.stringify(features));
 
-       axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {headers: {
-               'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsInJvbGUiOjIsImlhdCI6MTYyNTUxMTEzNSwiZXhwIjoxNjI1NTE4MzM1LCJhdWQiOiJsb2NhbGhvc3QiLCJpc3MiOiJVUmVudGFsIiwic3ViIjoiZ2FicmllbGUucGFsbWVyaUB0ZXN0Lml0In0.IVYLlsTEtEfZr8Hol7gldYa8P1VxhFDcCYe7-OXFYNbxiSrfYNnu7ApoHinbPjEjLVFB79ax-bMMR3Ds8CXj7IC_-5tY9PiV-fA1LY5rYxTRGRKsmpbTd8jccqreD5QjXlPX8_993sEesnQ_Abno8y475RKcZ1DiR8wB3UDrLN8`
-           }})
-           .then(res => {
-               this.setState({
-                   completed: true
-               });
-               console.log("ciao");
+           console.log(features);
+           form.append("features", JSON.stringify(features));
+
+           axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {
+               headers: {
+                   'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MiwiaWF0IjoxNjI1NTU4MDQ4LCJleHAiOjE2MjU2NDQ0NDgsImF1ZCI6ImxvY2FsaG9zdCIsImlzcyI6IlVSZW50YWwiLCJzdWIiOiJnYWJyaWVsZS5wYWxtZXJpQHRlc3QuaXQifQ.NY65sJHC2oJY6LNlhoohVOeH_DRkwZrpL9ubJu1N11wqcCZOu0KF9dvQ8oqPefMgDAl1qD_4_PjA0kwW8tPPjie-s_4GV5PByUV01kLob2IzoP97emEhqzR5t6DILBL0rYWvHKzhjt7V9Li-VdTIMDS0ONDHGTouQ7Qg2ymTUU4`
+               }
            })
-           .catch(err => {
-               this.setState({
-                   errorMessage: err.response.data.message,
-                   isVisible: true
+               .then(res => {
+                   this.setState({
+                       completed: true
+                   });
+               })
+               .catch(err => {
+                   this.setState({
+                       errorMessage: err.response.data.message,
+                       isVisible: true
+                   });
                });
-           });
+       }
+       else {
+           this.setState({
+               errorMessage: res.errorMessage,
+               isVisible: res.isVisible
+           })
+       }
     }
 
 
@@ -232,7 +276,7 @@ class Vehicle extends Component {
                            <button type="submit" className="btn btn-warning" onClick={this.handleSubmit}>Aggiungi Veicolo</button>
                           {
                               this.state.isVisible
-                                  ? <div className="alert alert-danger">
+                                  ? <div className="alert alert-danger col-lg-10">
                                       {this.state.errorMessage}
                                     </div>
                                   : null

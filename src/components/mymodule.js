@@ -41,3 +41,147 @@ export function validate2(form) {
    }
    else return {errorMessage: "Inserisci un numero di patente valido", isVisible: true};
 }
+export function validate3(form) {
+   if(form.brand) {
+      if(form.model) {
+         if(form.serialNumber) {
+               if(form.mainImage) {
+                  if (form.photos) {
+                     if (form.type) {
+                        switch (form.type) {
+                           case "0":
+                              if (form.licensePlate) {
+                                 if(form.displacement) {
+                                    if(form.kilowatt) {
+                                       if(form.seats) {
+                                          if(form.category) {
+                                             if(form.consumption) {
+                                                if(form.trunkSize) {
+                                                   if(form.shift) {
+                                                      if(form.euro) {
+                                                         if(form.fuel) {
+                                                            return true;
+                                                         }
+                                                         else return {errorMessage: "Inserisci fuel", isVisible: true};
+                                                      }
+                                                      else return {errorMessage: "Inserisci euro", isVisible: true};
+                                                   }
+                                                   else return {errorMessage: "Inserisci shift", isVisible: true};
+                                                }
+                                                else return {errorMessage: "Inserisci dimensione bagagliaio (trunk size)", isVisible: true};
+                                             }
+                                             else return {errorMessage: "Inserisci consumo gas Car", isVisible: true};
+                                          }
+                                          else return {errorMessage: "Inserisci categoria", isVisible: true};
+                                       }
+                                       else return {errorMessage: "Inserisci posti a sedere", isVisible: true};
+                                    }
+                                    else return {errorMessage: "Inserisci kilowatt", isVisible: true};
+                                 }
+                                 else return {errorMessage: "Inserisci cilindrata", isVisible: true};
+                              }
+                              else return {errorMessage: "Inserisci targa", isVisible: true};
+                              break;
+                           case "1":
+                              if (form.licensePlate) {
+                                    if(form.kilowatt) {
+                                       if(form.seats) {
+                                          if(form.category) {
+                                             if(form.consumption) {
+                                                if(form.trunkSize) {
+                                                      if(form.batteryCapacity) {
+                                                         if(form.chargeDuration) {
+                                                            return true;
+                                                         }
+                                                         else return {errorMessage: "Inserisci durata batteria", isVisible: true};
+                                                      }
+                                                      else return {errorMessage: "Inserisci capacità batteria", isVisible: true};
+                                                }
+                                                else return {errorMessage: "Inserisci dimensione bagagliaio (trunk size)", isVisible: true};
+                                             }
+                                             else return {errorMessage: "Inserisci consumo gas Car", isVisible: true};
+                                          }
+                                          else return {errorMessage: "Inserisci categoria", isVisible: true};
+                                       }
+                                       else return {errorMessage: "Inserisci posti a sedere", isVisible: true};
+                                    }
+                                    else return {errorMessage: "Inserisci kilowatt", isVisible: true};
+                              }
+                              else return {errorMessage: "Inserisci targa", isVisible: true};
+                              break;
+                           case "2":
+                              if (form.licensePlate) {
+                                 if(form.displacement) {
+                                    if(form.kilowatt) {
+                                       if(form.category) {
+                                             if(form.consumption) {
+                                                   if(form.shift) {
+                                                      if(form.euro) {
+                                                         if(form.fuel) {
+                                                            return true;
+                                                         }
+                                                         else return {errorMessage: "Inserisci fuel", isVisible: true};
+                                                      }
+                                                      else return {errorMessage: "Inserisci euro", isVisible: true};
+                                                   }
+                                                   else return {errorMessage: "Inserisci shift", isVisible: true};
+                                             }
+                                             else return {errorMessage: "Inserisci consumo gas Car", isVisible: true};
+                                          }
+                                          else return {errorMessage: "Inserisci categoria", isVisible: true};
+                                    }
+                                    else return {errorMessage: "Inserisci kilowatt", isVisible: true};
+                                 }
+                                 else return {errorMessage: "Inserisci cilindrata", isVisible: true};
+                              }
+                              else return {errorMessage: "Inserisci targa", isVisible: true};
+                              break;
+                           case "3":
+                              if (form.licensePlate) {
+                                 if(form.kilowatt) {
+                                    if(form.category) {
+                                          if(form.consumption) {
+                                                if(form.batteryCapacity) {
+                                                   if(form.chargeDuration) {
+                                                      return true;
+                                                   }
+                                                   else return {errorMessage: "Inserisci durata batteria", isVisible: true};
+                                                }
+                                                else return {errorMessage: "Inserisci capacità batteria", isVisible: true};
+                                          }
+                                          else return {errorMessage: "Inserisci consumo gas Car", isVisible: true};
+                                       }
+                                       else return {errorMessage: "Inserisci categoria", isVisible: true};
+                                 }
+                                 else return {errorMessage: "Inserisci kilowatt", isVisible: true};
+                              }
+                              else return {errorMessage: "Inserisci targa", isVisible: true};
+                              break;
+                           case "4":
+                           case "5":
+                              if(form.batteryCapacity) {
+                                 if(form.chargeDuration) {
+                                    return true;
+                              }
+                                 else return {errorMessage: "Inserisci durata batteria", isVisible: true};
+                              }
+                              else return {errorMessage: "Inserisci capacità batteria", isVisible: true};
+                              break;
+                           default:
+                              break;
+                        }
+
+                     }
+                     else return {errorMessage: "Inserisci tipo", isVisible: true};
+
+                  }
+                  else return {errorMessage: "Inserisci foto secondarie", isVisible: true};
+               }
+               else return {errorMessage: "Inserisci foto principale", isVisible: true};
+         }
+         else return {errorMessage: "Inserisci serialNumber", isVisible: true};
+      }
+      else return {errorMessage: "Inserisci Modello", isVisible: true};
+   }
+   else return {errorMessage: "Inserisci brand", isVisible: true};
+}
