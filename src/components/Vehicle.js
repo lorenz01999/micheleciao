@@ -62,8 +62,7 @@ class Vehicle extends Component {
            }})
            .then(res => {
                this.setState({
-                   completed: true,
-
+                   completed: true
                });
                console.log("ciao");
            })
@@ -97,6 +96,7 @@ class Vehicle extends Component {
              </h3>
            </div>
          );
+         this.state.completed = false;
        }
       else {
        return (
@@ -230,7 +230,13 @@ class Vehicle extends Component {
                            }
                            
                            <button type="submit" className="btn btn-warning" onClick={this.handleSubmit}>Aggiungi Veicolo</button>
-                     
+                          {
+                              this.state.isVisible
+                                  ? <div className="alert alert-danger">
+                                      {this.state.errorMessage}
+                                    </div>
+                                  : null
+                          }
                   </div>
                </div>
                    
