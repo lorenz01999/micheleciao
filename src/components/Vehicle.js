@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./Profile.css";
-import fs from "fs"
 import FormData from "form-data"
 import {validate3} from "./mymodule";
-//import { validateGasCar } from "./mymodule.js";
 
 class Vehicle extends Component {
    constructor(props) {
@@ -13,7 +11,7 @@ class Vehicle extends Component {
          type: "0",
          completed: false,
          isVisible: false,
-         shift: false
+         shift: "false"
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,18 +26,29 @@ class Vehicle extends Component {
            form.append('model', this.state.model);
            form.append('serialNumber', this.state.serialNumber.toUpperCase());
            form.append('type', this.state.type);
+           form.append('hourlyPrice', this.state.hourlyPrice);
+           form.append('dailyPrice', this.state.dailyPrice);
 
-           for (let i = 0; i < this.state.mainImage.length; i++) {
-               form.append('mainImage', this.state.mainImage[i]);
-           }
-           for (let i = 0; i < this.state.photos.length; i++) {
-               form.append('photos', this.state.photos[i]);
+           switch (this.state.type){
+               case "0":
+               case "1":
+               case "2":
+               case "3":
+                   form.append('mainImage', this.state.mainImage[0]);
+                   for (let i = 0; i < this.state.photos.length; i++) {
+                       form.append('photos', this.state.photos[i]);
+                   }
+                   break;
+               default:
+                   break;
            }
 
            let features = {}
 
            switch (this.state.type) {
                case "0":
+                   form.append('driverPrice', this.state.driverPrice);
+
                    features["licensePlate"] = this.state.licensePlate;
                    features["displacement"] = this.state.displacement;
                    features["kilowatt"] = this.state.kilowatt;
@@ -52,6 +61,8 @@ class Vehicle extends Component {
                    features["fuel"] = this.state.fuel;
                    break;
                case "1":
+                   form.append('driverPrice', this.state.driverPrice);
+
                    features["licensePlate"] = this.state.licensePlate;
                    features["kilowatt"] = this.state.kilowatt;
                    features["seats"] = this.state.seats;
@@ -89,13 +100,11 @@ class Vehicle extends Component {
                    break;
            }
 
-
-           console.log(features);
            form.append("features", JSON.stringify(features));
 
            axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {
                headers: {
-                   'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MiwiaWF0IjoxNjI1NTU4MDQ4LCJleHAiOjE2MjU2NDQ0NDgsImF1ZCI6ImxvY2FsaG9zdCIsImlzcyI6IlVSZW50YWwiLCJzdWIiOiJnYWJyaWVsZS5wYWxtZXJpQHRlc3QuaXQifQ.NY65sJHC2oJY6LNlhoohVOeH_DRkwZrpL9ubJu1N11wqcCZOu0KF9dvQ8oqPefMgDAl1qD_4_PjA0kwW8tPPjie-s_4GV5PByUV01kLob2IzoP97emEhqzR5t6DILBL0rYWvHKzhjt7V9Li-VdTIMDS0ONDHGTouQ7Qg2ymTUU4`
+                   'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MiwiaWF0IjoxNjI1Njg4NjEyLCJleHAiOjE2MjU2OTU4MTIsImF1ZCI6ImxvY2FsaG9zdCIsImlzcyI6IlVSZW50YWwiLCJzdWIiOiJnYWJyaWVsZS5wYWxtZXJpQHRlc3QuaXQifQ.GIW45O6myCXCmVaqPhBPO96bkVPhxPsHipU40C2zRT1PQC6uVA08Lxp55tO-vf5ciUkZMr5-XRE1rbWusW9hh3wvgCQxGvhe5Ns49NYvoUD5sx-KDRxUIYq7o5EGgxUgt9G12PN8P1upsGwnZCUUMqtcoOvharDQTpEJtJAi9Fw`
                }
            })
                .then(res => {
@@ -167,14 +176,14 @@ class Vehicle extends Component {
                               <label>Serial Number</label>
                               <input type="text" name="serialNumber" className="form-control" placeholder="989URH23HDB" onChange={this.handleChange}/>
                            </div>
-                           <div class="form-group col-lg-10">
-                              <label>Immagine Principale Veicolo</label>
-                              <input type="file" name="mainImage" className="form-control" onChange={this.handleChange1}/>
-                           </div>
-                           <div class="form-group col-lg-10">
-                              <label> Altre Foto Veicolo</label>
-                              <input type="file" name="photos" className="form-control" onChange={this.handleChange1} multiple/>
-                           </div>
+                          <div className="form-group col-lg-10">
+                              <label>Prezzo ad ora</label>
+                              <input type="number" name="hourlyPrice" className="form-control" placeholder="1.23" onChange={this.handleChange}/>
+                          </div>
+                          <div className="form-group col-lg-10">
+                              <label>Prezzo giornaliero</label>
+                              <input type="number" name="dailyPrice" className="form-control" placeholder="12.34" onChange={this.handleChange}/>
+                          </div>
                            <div class="form-group col-lg-10">
                               <label>Scegli il tipo di veicolo da inserire</label>
                               <select name="type" class="form-select" onChange={this.handleChange}>
@@ -188,9 +197,31 @@ class Vehicle extends Component {
                               </select>
                            </div>
 
+
+                           {
+                              this.state.type == "0" || this.state.type == "1" ?
+                                <div>
+                                  <div className="form-group col-lg-10">
+                                      <label>Prezzo con autista</label>
+                                      <input type="number" name="driverPrice" className="form-control" placeholder="12.34" onChange={this.handleChange}/>
+                                  </div>
+                                </div>
+                                  : null
+                           }
+
                            {
                               this.state.type == "0" || this.state.type == "1" || this.state.type =="2" || this.state.type == "3" ?
                               <div>
+                                  <div className="form-group col-lg-10">
+                                      <label>Immagine Principale Veicolo</label>
+                                      <input type="file" name="mainImage" className="form-control"
+                                             onChange={this.handleChange1}/>
+                                  </div>
+                                  <div className="form-group col-lg-10">
+                                      <label> Altre Foto Veicolo</label>
+                                      <input type="file" name="photos" className="form-control"
+                                             onChange={this.handleChange1} multiple/>
+                                  </div>
                                  <div className="form-group col-lg-10">
                                     <label>Targa</label>
                                     <input type="text" name="licensePlate" className="form-control" onChange={this.handleChange}/>
