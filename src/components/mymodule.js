@@ -1,3 +1,5 @@
+import {isVisible} from "bootstrap/js/src/util";
+
 export function validate (form) {
    if(/^[a-zA-Z]{2,}([ ][a-zA-Z]{3,})*$/.test(form.name)) {
       if(/^[a-zA-Z]{2,}([ ][a-zA-Z]{3,})*$/.test(form.surname)) {
@@ -213,4 +215,126 @@ export function validate3(form) {
       else return {errorMessage: "Inserisci Modello", isVisible: true};
    }
    else return {errorMessage: "Inserisci brand", isVisible: true};
+}
+
+export function validate4(form) {
+   if(form.licenseNumber) {
+      if(form.releaseDate) {
+         if(form.expirationDate) {
+            if(form.releasedFrom) {
+               if(form.A1 ||form.A2 || form.A3 || form.B) {
+                  return true;
+               }
+               else return {errorMessage: "Inserisci tipologia di patente", isVisible: true};
+            }
+            else return {errorMessage: "Inserisci Ente di rilascio", isVisible: true};
+         }
+         else return {errorMessage: "Inserisci  data di scadenza", isVisible: true};
+      }
+      else return {errorMessage: "Inserisci  data di rilascio", isVisible: true};
+   }
+   else return {errorMessage: "Inserisci  codice patente", isVisible: true};
+
+
+}
+
+export function createJSON(form) {
+   let res = {}
+   if(form.licenseNumber) {
+      res.licenseNumber = form.licenseNumber
+   }
+   if(form.releaseDate) {
+      res.releaseDate = form.releaseDate;
+   }
+   if(form.expirationDate) {
+      res.expirationDate = form.expirationDate;
+   }
+   if(form.releasedFrom) {
+      res.releasedFrom = form.releasedFrom;
+   }
+
+   res.A1 = form.A1;
+
+
+   res.A2 = form.A2;
+
+
+   res.A3 = form.A3;
+
+
+   res.B = form.B;
+
+   return res;
+}
+
+export function validate5(form, form1) {
+   let res;
+   if(form.licenseNumber) {
+      if(form.licenseNumber === form1.licenseNumber) {
+         delete form.licenseNumber;
+      }
+   }
+   if(form.releaseDate) {
+      if(form.releaseDate === form1.releaseDate) {
+         delete form.releaseDate;
+      }
+   }
+   if(form.expirationDate) {
+      if(form.expirationDate === form1.expirationDate) {
+         delete form.expirationDate;
+      }
+   }
+   if(form.releasedFrom) {
+      if(form.releasedFrom === form1.releasedFrom) {
+         delete form.releasedFrom;
+      }
+   }
+   if(form.A1 === false && form.A2 === false && form.A3 === false && form.B === false) {
+      return {errorMessage: "Seleziona almeno una categoria", isVisible: true};
+   }
+   if(form.A1 === form1.A1) {
+      delete form.A1;
+   }
+
+
+   if(form.A2 === form1.A2) {
+      delete form.A2;
+   }
+
+
+   if(form.A3 === form1.A3) {
+      delete form.A3;
+   }
+
+
+   if(form.B === form1.B) {
+      delete form.B;
+   }
+
+   if (Object.keys(form).length === 0) {
+      return {errorMessage: "La patente modificata non deve essere uguale alla patente originale", isVisible: true};
+   }
+   else {
+
+
+      return {form: form, isVisible: false};
+
+
+   }
+
+}
+
+export function validate6(pin) {
+   if(pin.length == 4){
+      let numb = Number.parseInt(pin);
+      if(numb >= 0 && numb <=9999) {
+
+         return {isCorrect: true};
+      }
+
+      else return {errorMessage: "Inserisci un codice PIN a 4 cifre", isCorrect: false}
+
+   }
+   else return {errorMessage: "Inserisci un codice PIN a 4 cifre", isCorrect: false}
+
 }

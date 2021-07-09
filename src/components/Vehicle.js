@@ -100,6 +100,7 @@ class Vehicle extends Component {
                    break;
            }
 
+
            form.append("features", JSON.stringify(features));
 
            axios.post("http://85.234.131.131:7850/staffs/addNewVehicle", form, {
@@ -149,7 +150,6 @@ class Vehicle extends Component {
              </h3>
            </div>
          );
-         this.state.completed = false;
        }
       else {
        return (
@@ -303,18 +303,21 @@ class Vehicle extends Component {
                               </div>
                               : null
                            }
-                           
-                           <button type="submit" className="btn btn-warning" onClick={this.handleSubmit}>Aggiungi Veicolo</button>
-                          {
+                            <br/>
+                            <button type="submit" className="btn btn-warning" onClick={this.handleSubmit}>Aggiungi Veicolo</button>
+                            <br/>
+                            <br/>
+                            <br/>
+                            {
                               this.state.isVisible
                                   ? <div className="alert alert-danger col-lg-10">
                                       {this.state.errorMessage}
                                     </div>
                                   : null
-                          }
+                            }
                   </div>
                </div>
-                   
+
             
             </div>
              
